@@ -38,6 +38,11 @@ namespace Multithreading.Samples.Threads
 
         private void LongRunningMethod(object delay)
         {
+            if(delay is not int)
+            {
+                return;
+            }
+
             Thread.Sleep((int)delay);
             Console.WriteLine($"LongRunningMethod completed execution on threadId {Thread.CurrentThread.ManagedThreadId}.");
         }

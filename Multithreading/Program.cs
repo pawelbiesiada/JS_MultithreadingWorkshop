@@ -7,6 +7,7 @@ using Multithreading.Samples.Tasks;
 using Multithreading.Samples.Parallels;
 using Multithreading.Samples.Rx;
 using Multithreading.Samples.ThreadSafeCollection;
+using Multithreading.Exercises.Workshop;
 
 namespace Multithreading
 {
@@ -14,6 +15,8 @@ namespace Multithreading
     {
         private static void Main(string[] args)
         {
+            var ex = new PrimeNumberParallel();
+            ex.Test();
 
             //var ex1 = new ParallelFolderRead();
             //ex1.Run();
@@ -49,11 +52,13 @@ namespace Multithreading
         private static void RunSample()
         {
             ISample sample = null;
-            
-            sample = new ThreadPresentation();
+
+            //sample = new ThreadPriority();
+
+            //sample = new ThreadPresentation();
             //sample = new ThreadException();
 
-            //sample = new TaskGeneric();
+            sample = new TaskGeneric();
             //sample = new AsyncAwaitPresentation();
 
             //sample = new Multithreading.Samples.Threads.CriticalSectionUnsafe();

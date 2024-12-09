@@ -9,6 +9,10 @@ namespace Multithreading.Samples.Threads
 
         public void Run()
         {
+            var sm = new SemaphoreSlim(5, 5);
+            //sm.WaitAsync()
+
+
             _semaphore = new Semaphore(5, 5);
             StartProcessing();
 
@@ -29,7 +33,7 @@ namespace Multithreading.Samples.Threads
         {
             // Wait thread to start processing (a semaphore to be released).
             Console.WriteLine("ThreadId {0} number {1} is ready to start.", Thread.CurrentThread.ManagedThreadId, args);
-            _semaphore.WaitOne();
+            _semaphore.WaitOne(1000);
 
             Console.WriteLine("ThreadId {0} number {1} is running.", Thread.CurrentThread.ManagedThreadId, args);
             Thread.Sleep(1000);

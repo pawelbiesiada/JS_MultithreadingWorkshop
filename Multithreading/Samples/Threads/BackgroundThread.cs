@@ -8,11 +8,12 @@ namespace Multithreading.Threads
         private static void Main(string[] args)
         {
             var backgroundThread = new Thread(LongRunningMethod) { IsBackground = true };
-         
+
+
             Console.WriteLine("Running method asynchronously as background thread.");
             backgroundThread.Start();
             Console.WriteLine("We are in main method, executing next statements...");
-            backgroundThread.Join();
+            //backgroundThread.Join();
         }
 
         private static void LongRunningMethod()

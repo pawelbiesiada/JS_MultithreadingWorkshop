@@ -7,23 +7,33 @@ namespace Multithreading.Samples.Tasks
     {
         public void Run()
         {
+
+            //Action
+            //Action<object>
+
+            //Func<R>
+            //Func<object,R>
+
+            //Predicate<T>   <=> Func<T, bool>
+
+            var t = new Task((obj) => { }, 2000);
+            t.Start();
+
+
             Task task = Task.Run(new Action(() =>
             {
                 Console.WriteLine("Run async task");
             }));
 
             task.Wait();
-
-
-                
-
-            
+            System.Threading.Thread.Sleep(2000);
             Task<string> taskGeneric = Task.Factory.StartNew<string>(() =>
             {
                 //throw new Exception();
                 Task.Delay(3000).Wait();
                 return "Hi!";
             });
+
 
             var name = "John Doe";
             Task<string> taskParametrized = Task.Factory.StartNew<string>((p) =>

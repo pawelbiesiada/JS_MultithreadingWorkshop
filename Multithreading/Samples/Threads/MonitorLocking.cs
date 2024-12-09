@@ -12,6 +12,9 @@ namespace Multithreading.Samples.Threads
         {
             var t1 = new Thread(PrintNumbers);
             var t2 = new Thread(PrintNumbers);
+
+
+
             //var t1 = new Thread(PrintNumbersWithLock);
             //var t2 = new Thread(PrintNumbersWithLock);
             t1.Start();

@@ -7,12 +7,17 @@ namespace Multithreading.Samples.Tasks
     class TasksCancellationToken : ISample
     {
         public void Run()
-        { 
+        {
             var cts = new CancellationTokenSource();
-            
+
+            var cts1 = new CancellationTokenSource();
+
+
+            //cts.Token.
+
             //var task = Task.Run(new Action(LongRunningProcessDelay));
             var task = new Task((token) => LongRunningProcess((CancellationToken)token), cts.Token);
-
+            
 
             try
             {
@@ -66,6 +71,8 @@ namespace Multithreading.Samples.Tasks
                 throw;
             }
         }
+
+
         private void LongRunningProcessGracefullCancellation(CancellationToken ct)
         {
             for (int i = 0; i < 10; i++)
@@ -74,8 +81,11 @@ namespace Multithreading.Samples.Tasks
                 {
                     ///
                     ///
+                    
+
                     return;
                 }
+
                 Thread.Sleep(1000);
             }
         }

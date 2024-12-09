@@ -7,7 +7,7 @@ namespace Multithreading.Threads
     {
         private static void Main(string[] args)
         {
-            var backgroundThread = new Thread(LongRunningMethod) { IsBackground = false };
+            var backgroundThread = new Thread(LongRunningMethod);
 
             Console.WriteLine("Running method asynchronously as foreground thread.");
             backgroundThread.Start();

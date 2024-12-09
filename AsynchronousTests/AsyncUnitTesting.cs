@@ -73,9 +73,10 @@ namespace AsynchronousTests
             var obj = new ProductionReadyClass();
 
             var t = obj.DoStuffAsync();
-            t.Wait();  
+            t.Wait();
 
-            Assert.IsTrue(t.Result);
+            //Assert.IsTrue(t.Result);
+            Assert.That(t.Result, Is.True);
         }
 
         //async test method works cause nunit supports it
@@ -86,7 +87,8 @@ namespace AsynchronousTests
 
             var result = await obj.DoStuffAsync();
 
-            Assert.IsTrue(result);
+           // Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         //this is recommended implementation

@@ -17,9 +17,14 @@ namespace Multithreading.Samples.Threads
 
             var t1 = new Thread(Increment1);
             var t2= new Thread(Increment2);
+            t1.Name = "Inc1";
             t1.Start();
             t2.Start();
-
+            ///
+            ///
+            ///
+            ///
+            ///
             t1.Join();
             t2.Join();
 
@@ -30,19 +35,36 @@ namespace Multithreading.Samples.Threads
             Console.ReadKey();
         }
 
+        private object _locker = new object();
+
         private void Increment1()
         {
-            while (_commonCounter < 10000000)
+
+            while (_commonCounter < 10_000_000)
             {
-                _commonCounter++;
+                var id = Thread.CurrentThread.ManagedThreadId;
+                
+                lock (_locker)
+                {
+                    if (_commonCounter < 10_000_000)
+                        _commonCounter++;
+                    else
+                        break;
+                }
                 _thread1Counter++;
             }
         }
         private void Increment2()
         {
-            while (_commonCounter < 10000000)
-            {
-                _commonCounter++;
+            while (_commonCounter < 10_000_000)
+            {     
+                lock (_locker)
+                {
+                    if (_commonCounter < 10_000_000)
+                        _commonCounter++;
+                    else
+                        break;
+                }
                 _thread2Counter++;
             }
         }
