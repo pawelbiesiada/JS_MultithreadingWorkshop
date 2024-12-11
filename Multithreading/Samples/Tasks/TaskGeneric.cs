@@ -8,61 +8,66 @@ namespace Multithreading.Samples.Tasks
         public void Run()
         {
 
-            //Action
-            //Action<object>
+            System.AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            ////Action
+            ////Action<object>
 
-            //Func<R>
-            //Func<object,R>
+            ////Func<R>
+            ////Func<object,R>
 
-            //Predicate<T>   <=> Func<T, bool>
+            ////Predicate<T>   <=> Func<T, bool>
 
-            var t = new Task((obj) => { }, 2000);
-            t.Start();
+            //var t = new Task((obj) => { }, 2000);
+            //t.Start();
 
 
-            Task task = Task.Run(new Action(() =>
+            //Task task = Task.Run(new Action(() =>
+            //{
+            //    Console.WriteLine("Run async task");
+            //}));
+
+            //task.Wait();
+            //System.Threading.Thread.Sleep(2000);
+            Task taskGeneric = Task.Factory.StartNew(() =>
             {
-                Console.WriteLine("Run async task");
-            }));
-
-            task.Wait();
-            System.Threading.Thread.Sleep(2000);
-            Task<string> taskGeneric = Task.Factory.StartNew<string>(() =>
-            {
-                //throw new Exception();
+                throw new TimeoutException();
                 Task.Delay(3000).Wait();
-                return "Hi!";
             });
-
-
-            var name = "John Doe";
-            Task<string> taskParametrized = Task.Factory.StartNew<string>((p) =>
-            {
-                //throw new Exception();
-                Task.Delay(3000).Wait();
-                return $"Hi {p}!";
-            }, name);
 
             try
             {
+                System.Threading.Thread.Sleep(1000);
+                //Task.Delay(5000).Wait();
 
                 taskGeneric.Wait();
 
-                var res = taskGeneric.Result;
+                //var res = taskGeneric.Result;
 
-
+            }
+            catch (TimeoutException tex)
+            {
 
             }
             catch (AggregateException axc)
-            {
+            {                
                 Console.WriteLine(axc);
                 Console.WriteLine();
                 Console.WriteLine(axc.InnerException);
                 //Console.WriteLine(axc.InnerExceptions); //can be used in Parrallel or PLINQ
             }
+            catch (Exception ex)
+            {
+            }
 
-            Console.WriteLine(taskGeneric.Result);
+            //Console.WriteLine(taskGeneric.Result);
             Console.ReadKey();
+
+            
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            //throw new NotImplementedException();
         }
     }
 }

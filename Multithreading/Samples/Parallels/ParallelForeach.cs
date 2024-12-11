@@ -15,15 +15,43 @@ namespace Multithreading.Samples.Parallels
                 arr.Add(i.ToString());
             }
             //arr.ForEach(PrintMessage);
-            //var loopResults = Parallel.ForEach(arr, PrintMessage);
+            var loopResults = Parallel.ForEach(arr, PrintMessage);
+
+            //Parallel.ForEach(arr, PrintMessage);
+
 
             var obj = new object();
             var count = 0;
-            Parallel.ForEach(arr, //source
-            () => { Console.WriteLine("Init {0}", Thread.CurrentThread.ManagedThreadId); return -2; }, // localInit
-            (el, po, localState) => { Console.WriteLine("Body {0} value {1}", Thread.CurrentThread.ManagedThreadId, el); return 1; }, //body
-            (localState) => { Console.WriteLine("finish {0}", Thread.CurrentThread.ManagedThreadId); lock (obj) { count += localState; } }//localfinally
-            );
+
+
+            try
+            {
+                Parallel.ForEach(arr, //source
+
+                () => {
+                    Console.WriteLine("Init {0}", Thread.CurrentThread.ManagedThreadId);
+                    return -2;
+                }, // localInit
+
+                (el, po, localState) => {
+                    Console.WriteLine("Body {0} value {1}", Thread.CurrentThread.ManagedThreadId, el);
+                    if (int.Parse(el) > 10)
+                        throw new ArgumentException(Thread.CurrentThread.ManagedThreadId.ToString());
+                    return 1;
+                }, //body
+
+                (localState) => {
+
+                    Console.WriteLine("finish {0}", Thread.CurrentThread.ManagedThreadId);
+                    lock (obj) { count += localState; }
+                }//localfinally
+                );
+            }
+            catch (AggregateException aex)
+            {
+                //aex.InnerExceptions
+            }
+
 
             Console.WriteLine($"Total number of threads ran in Parallel.ForEach {count}");
             Console.ReadKey();
@@ -31,7 +59,11 @@ namespace Multithreading.Samples.Parallels
 
         private void PrintMessage(string number)
         {
+            //open
+
             Console.WriteLine("Executed iteration {0}. CurrentThread {1}", number, Thread.CurrentThread.ManagedThreadId);
+
+            //close
         }
     }
 }

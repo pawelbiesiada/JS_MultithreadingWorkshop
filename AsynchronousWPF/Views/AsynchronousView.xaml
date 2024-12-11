@@ -28,6 +28,9 @@
                 <Button x:Name="s2Btn" Command="{Binding Example2Command}" Height="56" Width="90" Margin="10">
                     <TextBlock Text="Run throwing Exception" TextWrapping="Wrap"/>
                 </Button>
+                <Button x:Name="btnReadFile" Content="Button" Click="btnReadFile_Click"/>
+                <TextBox x:Name="txtContent"  TextWrapping="Wrap" Text="" Width="120" TextChanged="txtContent_TextChanged"/>
+                <Button Content="Button" Click="Button_Click"/>
             </StackPanel>
 
             <Label Grid.Row="2">Asynchronous</Label>

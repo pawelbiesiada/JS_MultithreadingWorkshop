@@ -9,6 +9,7 @@ namespace Multithreading.Samples.ThreadSafeCollection
         {
             var immutableStack = ImmutableStack<string>.Empty; //Push, Pop, Peek, PeekRef
 
+
             var immutableQueue = ImmutableQueue<string>.Empty;
             immutableQueue.Enqueue("first");
             var newImmutable = immutableQueue.Enqueue("second");

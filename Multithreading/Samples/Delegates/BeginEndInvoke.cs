@@ -11,7 +11,7 @@ namespace Multithreading.Delegates
 
             //action("");
             //action.Invoke("");
-
+ 
             var asyncResult = action.BeginInvoke("SomeText",
                 (ar) => { Console.WriteLine("Executed on Action completed."); }, null); //IAsyncResult.AsyncState is null
 

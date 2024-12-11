@@ -12,13 +12,13 @@ namespace Multithreading.Samples.Threads
             try
             {
                 thread.Start();
-                thread.Join();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
             }
+            thread.Join();
         }
 
         private  void LongRunningMethod()

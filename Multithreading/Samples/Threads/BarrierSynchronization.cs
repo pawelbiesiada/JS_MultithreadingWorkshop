@@ -31,7 +31,7 @@ namespace Multithreading.Samples.Threads
             for (int i = 5; i < 10; ++i)
             {
                 Console.Write(i.ToString());
-                //_barrier.SignalAndWait();
+                _barrier.SignalAndWait();
             }
         }
     }

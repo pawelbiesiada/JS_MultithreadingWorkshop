@@ -4,14 +4,24 @@ using System.Threading.Tasks;
 
 namespace Multithreading.Async
 {
-    internal class AsyncAwaitPresentation
+    public class AsyncAwaitPresentation : ISample
     {
-        public void Run()
+        public async void Run()
         {
+            
+            var cs = System.Threading.SynchronizationContext.Current;
+
+
             var value = "Pawel";
             var result = GetNameAsync(value);
             Console.WriteLine("More processing is pending.");
-            result.Wait();
+            ///
+            ///
+
+            ///
+            ///
+
+            await result;
             var textToDisplay =  result.Result;
             Console.WriteLine(textToDisplay);
             Console.WriteLine("Awaited for asynchronous call to complete.");
@@ -27,7 +37,7 @@ namespace Multithreading.Async
             string result = "";
             try
             {
-                var t = SayHiByNameAsync(myName);
+                var t = SayHiByNameAsync(myName).ConfigureAwait(false);
                 result = await t;
 
                 //var t2 = SayHiByName(myName);

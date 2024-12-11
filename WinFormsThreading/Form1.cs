@@ -39,12 +39,15 @@ namespace WinFormsThreading
         {
             var sc = SynchronizationContext.Current;
             Task.Delay(3000).Wait();
+            
             textBox1.BeginInvoke(new Action(() => {
                 var sc2 = SynchronizationContext.Current;
                 textBox1.Text += Environment.NewLine + "LongRunningTask"; //this is ok because it is UI thread
                 button1.Text = "Clicked";
             }));
-            //textBox1.Text = "This will cause exception.";  //this is not ok because this is not UI thread
+            
+            
+            textBox1.Text = "This will cause exception.";  //this is not ok because this is not UI thread
         }
 
     }

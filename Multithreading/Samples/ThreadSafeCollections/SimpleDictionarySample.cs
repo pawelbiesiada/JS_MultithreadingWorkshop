@@ -7,10 +7,10 @@ namespace Multithreading.Samples.ThreadSafeCollection
 {
     internal class SimpleDictionarySample : ISample
     {
-        private readonly ConcurrentDictionary<int, User> _app = new ConcurrentDictionary<int, User>();
+        //private readonly ConcurrentDictionary<int, User> _app = new ConcurrentDictionary<int, User>();
 
 
-        //private readonly Dictionary<int, User> _app = new Dictionary<int, User>();
+        private readonly Dictionary<int, User> _app = new Dictionary<int, User>();
         private readonly List<User> _users = new List<User>();
 
         public SimpleDictionarySample()
@@ -82,14 +82,16 @@ namespace Multithreading.Samples.ThreadSafeCollection
         {
             if (!_app.ContainsKey(user.Id))
             {
-                _app.AddOrUpdate(user.Id, user, (i, val) => { return _app[i]; });
+                //_app.AddOrUpdate(user.Id, user, (i, val) => { return _app[i]; });
+                _app.Add(user.Id, user);
             }
         }
         private void LogOut(User user)
         {
             if (_app.ContainsKey(user.Id))
             {
-                _app.TryRemove(user.Id, out var u);
+                _app.Remove(user.Id);
+               // _app.TryRemove(user.Id, out var u);
             }
         }
 

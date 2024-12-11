@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Multithreading.Exercises.Workshop
@@ -10,6 +11,7 @@ namespace Multithreading.Exercises.Workshop
     {
         public void Test()
         {
+            var cts = new CancellationTokenSource();
             var numbers = new List<int>();
             var rand = new Random();
             for (int i = 0; i < 20; i++)
@@ -37,12 +39,15 @@ namespace Multithreading.Exercises.Workshop
             var sum = primeNumbersResults.Where(x => x.Item2.Result).Sum(x => x.Item1);
             var count = primeNumbersResults.Count(x => x.Item2.Result);
 
+            Console.WriteLine($"Suma: {sum} count: {count}");
 
             //print to console sum of prime numbers found
             //print to console what numbers were prime numbers
 
 
-            var timeout = Task.Delay(1000);
+            var timeout = Task.Delay(1000, cts.Token);
+
+           // System.IO.File.ReadAllTextAsync("C:\\Temp");
 
             var tasks = primeNumbersResults.Select(x => (Task)x.Item2).ToList();
             tasks.Add(timeout);
@@ -60,12 +65,26 @@ namespace Multithreading.Exercises.Workshop
 
         }
 
-
-        public bool IsPrimeNumber(int i)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public bool IsPrimeNumber(int number, int millisecondsTimeout = 30_000 )
         {
-            for (int j = 2; j < i; j++)
+            var cts = new CancellationTokenSource(millisecondsTimeout); 
+
+            return IsPrimeNumber(number, cts.Token);
+        }
+
+        public bool IsPrimeNumber(int number, CancellationToken token)
+        {
+            for (int j = 2; j < number; j++)
             {
-                if (j % i == 0)
+                Thread.Sleep(1);
+                Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
+                token.ThrowIfCancellationRequested();
+                if (number % j == 0)
                     return false;
             }
 

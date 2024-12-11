@@ -228,21 +228,24 @@ namespace AsynchronousWPFCore.ViewModels
         {
             IsProgressBarRunning = true;
 
-            RunOperationWithDeadlockAsync().Wait(); // deadlock
+            var t = RunOperationWithDeadlockAsync();
+            //
+            //
+            t.Wait(); // deadlock
 
             ////no deadlock - thread changed!
             //Task.Run(() =>
             //{
             //    var sc1 = SynchronizationContext.Current;
             //    RunOperationWithDeadlockAsync().Wait();
-            //    // returns from Wait on different thread from thread pool, because context is null
+            //    //returns from Wait on different thread from thread pool, because context is null
             //}).Wait();
 
         }
 
         private async Task RunOperationWithDeadlockAsync()
         {
-            await Task.Delay(WaitingTime);
+            await Task.Delay(WaitingTime).ConfigureAwait(false);
             IsProgressBarRunning = false;
         }
 

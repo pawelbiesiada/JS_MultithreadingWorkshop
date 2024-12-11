@@ -8,10 +8,14 @@ namespace Multithreading.Samples.Parallels
     {
         public void Run()
         {
+           
+
             var loopResults = Parallel.For(0, 20, 
-                new ParallelOptions() {MaxDegreeOfParallelism = 8,  }, 
+                new ParallelOptions() {MaxDegreeOfParallelism = Environment.ProcessorCount == 1 ? 1 : Environment.ProcessorCount - 1, CancellationToken = CancellationToken.None  }, 
                 PrintMessage);
             
+
+
             Console.ReadKey();
         }
 

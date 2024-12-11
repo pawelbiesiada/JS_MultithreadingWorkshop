@@ -9,6 +9,8 @@ namespace Multithreading.Samples.Rx
     {
         public void Run()
         {
+
+
             int bufferCount = 0;
             var range = Observable.Range(0, 10)               
             .Buffer(3);

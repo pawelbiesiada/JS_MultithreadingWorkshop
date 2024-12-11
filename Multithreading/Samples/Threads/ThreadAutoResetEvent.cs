@@ -14,6 +14,7 @@ namespace Multithreading.Samples.Threads
             _counter = 0;
             var thread = new Thread(new ThreadStart(ThreadMethod));
             thread.Start();
+
             Thread.Sleep(10);
             Console.WriteLine("ThreadId {0} is in status {1}. The counter is {2}", thread.ManagedThreadId, thread.ThreadState, _counter);
 

@@ -19,6 +19,7 @@ namespace AsynchronousTests
             Assert.Pass();
         }
 
+
         //It actually passes but it should really not
         [Test]
         public void TestVoidAsyncExceptionMethod_ThatShouldFailButItDoesNot()
@@ -29,6 +30,8 @@ namespace AsynchronousTests
 
             Assert.Pass();
         }
+
+
 
         //Cannot await on void
         //[Test]
@@ -47,7 +50,7 @@ namespace AsynchronousTests
         //{
         //    var obj = new ProductionReadyClass();
 
-        //   // Assert.ThrowsAsync<ApplicationException>(() => obj.DoVoidStuffAndFailAsync() );  //Does not match delegate signature
+        //     Assert.ThrowsAsync<ApplicationException>(async () => obj.DoVoidStuffAndFailAsync() );  //Does not match delegate signature
         //}
 
 
@@ -99,7 +102,7 @@ namespace AsynchronousTests
 
             Assert.DoesNotThrowAsync(async () => await obj.DoStuffAsync());
             
-            //Assert.ThrowsAsync<ApplicationException>(async () => await obj.DoStuffAsync());
+            Assert.ThrowsAsync<ApplicationException>(async () => await obj.DoStuffAsync());
 
             Assert.Pass();
         }
@@ -110,12 +113,12 @@ namespace AsynchronousTests
         {
             var obj = new ProductionReadyClass();
 
-            Assert.Throws<ApplicationException>(() => obj.DoStuffAndFailAsync());
+            Assert.Throws<ApplicationException>(async () => await obj.DoStuffAndFailAsync());
 
             Assert.Pass();
         }
 
-        //this is a correct way of testin async methods
+        //this is a correct way of testinf async methods
         [Test]
         public void TestAsyncExceptionMethodAsyncWithAsyncInAssert()
         {
@@ -134,12 +137,12 @@ namespace AsynchronousTests
         }
 
         //this causes runtime exception can't use async/await in delegate
-        //[Test]
-        //public void TestAsyncExceptionMethodAsyncWithNonAsyncAssert()
-        //{
-        //    var obj = new ProductionReadyClass();
+        [Test]
+        public void TestAsyncExceptionMethodAsyncWithNonAsyncAssert()
+        {
+            var obj = new ProductionReadyClass();
 
-        //    Assert.Throws<ApplicationException>(async () => await obj.DoStuffAndFailAsync());
-        //}
+            Assert.Throws<ApplicationException>(async () => await obj.DoStuffAndFailAsync());
+        }
     }
 }
